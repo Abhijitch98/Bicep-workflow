@@ -31,7 +31,7 @@ jobs:
           creds: ${{secrets.AZURE_SPN_CREDENTIAL }}
 
       - name: az bicep deploy
-        working-directory: '{{github.workspace}}/src/bicep'
+        working-directory: '{{github.workspace}}/src'
         run: |
           az deployment group create --resource-group Abhijitchaudhari7898 --template-file ./Mail.bicep
         
