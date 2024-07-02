@@ -30,6 +30,9 @@ jobs:
         with:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
           creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
+        
+        - name: Check if directory exists
+        run: ls ${{ github.workspace }}/src/bicep
 
       - name: az bicep deploy
         working-directory: ${{github.workspace}}/src/bicep
@@ -52,7 +55,10 @@ jobs:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
           creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
 
+        - name: Check if directory exists
+        run: ls ${{ github.workspace }}/src/bicep
+
       - name: az bicep deploy
         working-directory: ${{github.workspace}}/src/bicep
         run: |
-          az deployment group create --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameter @mainA.parameters.json
+          az deployment group create --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameters @mainA.parameters.json
