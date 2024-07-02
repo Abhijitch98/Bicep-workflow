@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "tags": {
+        "value": {
+          "App": "POC",
+          "Owner": "Infra-team",
+          "Confidentiality": "Sensitive",
+          "CostCenter": "Infra-team",
+          "Env": "Innovation",
+          "BusinessImpact": "Low"
+        }
+      },
+      "adminUsername": {
+        "value": "abhijitchaudhari"
+      },
+      "adminPassword": {
+        "value": "abhijitchaudhari@98"
+      },
+      "publicIpName": {
+        "value": "myPublicIP"
+      },
+      "publicIPAllocationMethod": {
+        "value": "Dynamic"
+      },
+      "publicIpSku": {
+        "value": "Basic"
+      },
+      "OSVersion": {
+        "value": "2016-datacenter-smalldisk-g2"
+      },
+      "vmSize": {
+        "value": "Standard_B1ms"
+      },
+      "location": {
+        "value": "eastus"
+      },
+      "vmName": {
+        "value": "testpocvm0"
+      },
+      "virtualNetworkName": {
+        "value": "MyVNET"
+      },
+      "subnetNames": {
+        "value": [
+          "Subnet"
+        ]
+      },
+      "address_space": {
+        "value": [
+          "10.0.0.0/16"
+        ]
+      },
+      "subnetPrefix": {
+        "value": [
+          "10.0.0.0/24"
+        ]
+      },
+      "storageAccountType": {
+        "value": "StandardSSD_LRS"
+      },
+      "diskSizeGB": {
+        "value": 1023
+      },
+      "lun": {
+        "value": 0
+      },
+      "createOption": {
+        "value": "Empty"
+      }
+    }
+  }
+  
