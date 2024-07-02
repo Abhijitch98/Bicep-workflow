@@ -31,6 +31,9 @@ jobs:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
           creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
         
+      - name: Debug - List directory structure
+        run: ls -R ${{ github.workspace }}
+        
       - name: Check if directory exists
         run: ls ${{ github.workspace }}/src/bicep
 
@@ -54,6 +57,9 @@ jobs:
         with:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
           creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
+
+      - name: Debug - List directory structure
+        run: ls -R ${{ github.workspace }}
 
       - name: Check if directory exists
         run: ls ${{ github.workspace }}/src/bicep
