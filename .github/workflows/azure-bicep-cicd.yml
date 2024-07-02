@@ -28,10 +28,10 @@ jobs:
         uses: Azure/login@v2.1.0
         with:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-          creds: ${{secrets.AZURE_SPN_CREDENTIAL }}
+          creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
 
       - name: az bicep deploy
-        working-directory: {{github.workspace}}/src/bicep
+        working-directory: ${{github.workspace}}/src/bicep
         run: |
           az deployment group create --resource-group Abhijitchaudhari7898 --template-file ./Mail.bicep
         
