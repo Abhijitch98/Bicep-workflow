@@ -55,7 +55,7 @@ jobs:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
           creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
 
-        - name: Check if directory exists
+      - name: Check if directory exists
         run: ls ${{ github.workspace }}/src/bicep
 
       - name: az bicep deploy
