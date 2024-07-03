@@ -1,0 +1,32 @@
+name: azure bicep resource deletion
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  delete:
+    name: 'delete bicep resource'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: Azure/login@v2.1.0
+        with:
+          creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
+
+      - name: Check if directory exists
+        run: ls ${{ github.workspace }}/src/bicep
+
+      - name: Delete Azure VM
+        run: |
+          az vm delete --resource-group Abhijitchaudhari7898 --name testpocvm0 --yes --no-wait
+
+      - name: Delete Resource Group (optional)
+        run: |
+          az group delete --name Abhijitchaudhari7898 --yes --no-wait
