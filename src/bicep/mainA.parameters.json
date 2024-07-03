@@ -34,7 +34,7 @@
         "value": "Standard_B1ms"
       },
       "location": {
-        "value": "eastus"
+        "value": "UK South"
       },
       "vmName": {
         "value": "testpocvm0"
