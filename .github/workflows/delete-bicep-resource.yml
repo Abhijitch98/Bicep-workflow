@@ -1,11 +1,7 @@
 name: azure bicep resource deletion
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+  workflow_dispatch
 
 jobs:
   delete:
@@ -25,7 +21,7 @@ jobs:
 
       - name: Delete Azure VM
         run: |
-          az disk delete --resource-group Abhijitchaudhari7898 --name testpocvm0_disk2_5322bafef808474386f6eb191e94b9d7 --yes --no-wait
+          az disk delete --resource-group Abhijitchaudhari7898 --name testpocvm0_disk2_5322bafef808474386f6eb191e94b9d7 --yes 
 
       - name: Delete Resource Group (optional)
         run: |
