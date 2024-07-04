@@ -35,6 +35,4 @@ jobs:
             fi
           done
 
-      - name: Delete Azure VM
-        run: |
-          az vm delete --resource-group Abhijitchaudhari7898 --name testpocvm0 --yes 
+          
