@@ -30,7 +30,9 @@ jobs:
           # Loop through each resource and delete it
           for resource in $resources; do
             echo "Deleting resource: $resource"
-            az resource delete --ids $resource
+            if ! az resource delete --ids $resource --verbose; then
+              echo "Failed to delete resource: $resource"
+            fi
           done
 
       - name: Delete Azure VM
