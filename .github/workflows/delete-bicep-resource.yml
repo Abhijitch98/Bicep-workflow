@@ -25,14 +25,19 @@ jobs:
 
       - name: List and Delete All Resources in Resource Group
         run: |
-          # List and delete resources in specific order to handle dependencies
+          # Define resource types to delete in order
           resource_types_to_delete_first=(
-            "Microsoft.Network/networkInterfaces"
             "Microsoft.Compute/virtualMachines"
+            "Microsoft.Network/networkInterfaces"
             "Microsoft.Network/publicIPAddresses"
+            "Microsoft.Compute/disks"
+            "Microsoft.Network/virtualNetworks"
           )
-          
-          for resource_type in "${resource_types_to_delete_first[@]}"; do
+
+          # Function to delete resources of a specific type
+          delete_resources_of_type() {
+            resource_type=$1
+            echo "Deleting resources of type: $resource_type"
             resources=$(az resource list --resource-group Abhijitchaudhari7898 --resource-type $resource_type --query "[].id" -o tsv)
             for resource in $resources; do
               echo "Deleting resource: $resource"
@@ -40,16 +45,22 @@ jobs:
                 echo "Failed to delete resource: $resource"
               fi
             done
+          }
+
+          # Delete resources in the specified order
+          for resource_type in "${resource_types_to_delete_first[@]}"; do
+            delete_resources_of_type $resource_type
           done
-          
-          # Now delete the remaining resources
-          resources=$(az resource list --resource-group Abhijitchaudhari7898 --query "[].id" -o tsv)
-          for resource in $resources; do
-            echo "Deleting resource: $resource"
+
+          # Attempt to delete remaining resources
+          remaining_resources=$(az resource list --resource-group Abhijitchaudhari7898 --query "[].id" -o tsv)
+          for resource in $remaining_resources; do
+            echo "Deleting remaining resource: $resource"
             if ! az resource delete --ids $resource --verbose; then
-              echo "Failed to delete resource: $resource"
+              echo "Failed to delete remaining resource: $resource"
             fi
           done
+
 
 
           
