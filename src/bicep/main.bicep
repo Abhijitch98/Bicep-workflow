@@ -129,3 +129,11 @@ module VnetAzure 'VnetAzure.bicep'={
     subnetPrefix:subnetPrefix
   }
 }
+
+module recourcegroup 'recourcegroup.bicep'={
+  name:'recourcegrouppoc'
+  params:{
+    location: location
+    Resourcegroupname: Resourcename
+  }
+}
