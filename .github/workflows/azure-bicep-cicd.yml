@@ -20,6 +20,7 @@ jobs:
           creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
       
       - name: Build Resource Group
+        working-directory: ${{ github.workspace }}/src/bicep
         run: |
           az deployment sub what-if --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
 
@@ -36,6 +37,7 @@ jobs:
           creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
       
       - name: Validate Resource Group Deployment
+        working-directory: ${{ github.workspace }}/src/bicep
         run: |
           az group show --name myResourceGroup
 
