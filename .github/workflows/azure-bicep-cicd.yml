@@ -39,7 +39,7 @@ jobs:
       - name: Validate Resource Group Deployment
         working-directory: ${{ github.workspace }}/src/bicep
         run: |
-          az group show --name myResourceGroup
+          az group show --name pocrg001
 
   build-resources:
     name: Build Resources
