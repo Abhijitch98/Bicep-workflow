@@ -21,7 +21,7 @@ jobs:
       
       - name: Build Resource Group
         run: |
-          az deployment sub what-if --location 'UK South' --template-file ./resource-group.bicep --parameters @ResourcesGro.parameters.json
+          az deployment sub what-if --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
 
   deploy-resource-group:
     name: Deploy Resource Group
@@ -59,7 +59,7 @@ jobs:
 
       - name: Validate Bicep Script using What-If
         working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment sub create --location 'UK South' --template-file ./resource-group.bicep --parameters @ResourcesGro.parameters.json
+        run: az deployment sub create --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
 
   deploy-resources:
     name: Deploy Resources
@@ -79,8 +79,8 @@ jobs:
 
       - name: Validate Bicep Script using What-If
         working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment group what-if --resource-group myResourceGroup --template-file ./main.bicep --parameters @mainA.parameters.json
+        run: az deployment group what-if --resource-group pocrg001 --template-file ./main.bicep --parameters @mainA.parameters.json
 
       - name: Deploy Resources
         working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment group create --resource-group myResourceGroup --template-file ./main.bicep --parameters @mainA.parameters.json
+        run: az deployment group create --resource-group pocrg001 --template-file ./main.bicep --parameters @mainA.parameters.json
