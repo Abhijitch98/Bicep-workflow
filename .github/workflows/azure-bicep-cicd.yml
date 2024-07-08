@@ -1,36 +1,56 @@
-# This is a basic workflow to help you get started with Actions
-
 name: azure bicep deployment
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    name: 'bicep build'
-    # The type of runner that the job will run on
+  build-resource-group:
+    name: Build Resource Group
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
       - name: Azure Login
         uses: Azure/login@v2.1.0
         with:
-          # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-          creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
-        
+          creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
+      
+      - name: Build Resource Group
+        run: |
+          az deployment sub what-if --template-file ./resource-group.bicep --parameters @ResourcesGro.parameters.json
+
+  deploy-resource-group:
+    name: Deploy Resource Group
+    runs-on: ubuntu-latest
+    needs: build-resource-group
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Azure Login
+        uses: Azure/login@v2.1.0
+        with:
+          creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
+      
+      - name: Validate Resource Group Deployment
+        run: |
+          az group show --name myResourceGroup
+
+  build-resources:
+    name: Build Resources
+    runs-on: ubuntu-latest
+    needs: deploy-resource-group
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Azure Login
+        uses: Azure/login@v2.1.0
+        with:
+          creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
+      
       - name: Debug - List directory structure
         run: ls -R ${{ github.workspace }}
         
@@ -38,37 +58,29 @@ jobs:
         run: ls ${{ github.workspace }}/src/bicep
 
       - name: Validate Bicep Script using What-If
-        working-directory: ${{github.workspace}}/src/bicep
-        run: az deployment group what-if --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameters @mainA.parameters.json
+        working-directory: ${{ github.workspace }}/src/bicep
+        run: az deployment sub create --template-file ./resource-group.bicep --parameters @ResourcesGro.parameters.json
 
-      - name: az bicep deploy
-        working-directory: ${{github.workspace}}/src/bicep
-        run: az deployment group create --what-if --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameters @mainA.parameters.json
-        
-  deploy:
-    name: 'bicep deploy'
-    # The type of runner that the job will run on
+  deploy-resources:
+    name: Deploy Resources
     runs-on: ubuntu-latest
-    needs: [build]
-    environment: dev 
+    needs: build-resources
+    environment: dev
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
       - name: Azure Login
         uses: Azure/login@v2.1.0
         with:
-          #Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-          creds: ${{secrets.AZURE_SPN_CREDENTIAL}}
+          creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
           
       - name: Check if directory exists
         run: ls ${{ github.workspace }}/src/bicep
 
       - name: Validate Bicep Script using What-If
-        working-directory: ${{github.workspace}}/src/bicep
-        run: az deployment group what-if --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameters @mainA.parameters.json
+        working-directory: ${{ github.workspace }}/src/bicep
+        run: az deployment group what-if --resource-group myResourceGroup --template-file ./main.bicep --parameters @mainA.parameters.json
 
-      - name: az bicep deploy
-        working-directory: ${{github.workspace}}/src/bicep
-        run: az deployment group create --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameters @mainA.parameters.json
+      - name: Deploy Resources
+        working-directory: ${{ github.workspace }}/src/bicep
+        run: az deployment group create --resource-group myResourceGroup --template-file ./main.bicep --parameters @mainA.parameters.json

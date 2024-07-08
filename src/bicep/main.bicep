@@ -96,6 +96,8 @@ param lun int = 0
 @description('Option for creating the disk.')
 param createOption string = 'Empty'
 
+
+
 module VMAzure 'VMAzure.bicep'={
   name:'pocvm'
   params:{
@@ -127,13 +129,5 @@ module VnetAzure 'VnetAzure.bicep'={
     virtualNetworkName: virtualNetworkName
     subnetNames:subnetNames
     subnetPrefix:subnetPrefix
-  }
-}
-
-module recourcegroup 'recourcegroup.bicep'={
-  name:'recourcegrouppoc'
-  params:{
-    location: location
-    Resourcegroupname: Resourcename
   }
 }

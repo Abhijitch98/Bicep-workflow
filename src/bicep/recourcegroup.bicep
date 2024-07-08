@@ -4,9 +4,9 @@ targetScope = 'subscription'
 param location string
 
 @description('Name of the virtual machine.')
-param Resourcename string 
+param Resourcegroupname string 
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
-  name: 'Resourcename'
+  name: Resourcegroupname
   location: location
 }
