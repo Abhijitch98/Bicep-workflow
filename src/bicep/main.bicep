@@ -62,7 +62,6 @@ param publicIpSku string = 'Basic'
 ])
 param OSVersion string = '2016-datacenter-smalldisk-g2'
 
-
 @description('Size of the virtual machine.')
 param vmSize string = 'Standard_B1ms'
 
@@ -71,7 +70,6 @@ param location string
 
 @description('Name of the virtual machine.')
 param vmName string = 'testpocvm0'
-
 
 @description('Name of the virtual network associated with the virtual machine.')
 param virtualNetworkName string = 'MyVNET'
@@ -96,8 +94,6 @@ param lun int = 0
 
 @description('Option for creating the disk.')
 param createOption string = 'Empty'
-
-
 
 module VMAzure 'VMAzure.bicep'={
   name:'pocvm'
