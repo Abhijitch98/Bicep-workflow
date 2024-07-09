@@ -41,19 +41,8 @@ jobs:
             resources=$(az resource list --resource-group Abhijitchaudhari7898 --resource-type $resource_type --query "[].id" -o tsv)
             for resource in $resources; do
               echo "Deleting resource: $resource"
-              retries=3
-              while [ $retries -gt 0 ]; do
-                if az resource delete --ids $resource --verbose; then
-                  echo "Successfully deleted resource: $resource"
-                  break
-                else
-                  echo "Failed to delete resource: $resource. Retrying..."
-                  retries=$((retries - 1))
-                  sleep 5
-                fi
-              done
-              if [ $retries -eq 0 ]; then
-                echo "Failed to delete resource: $resource after multiple attempts"
+              if ! az resource delete --ids $resource --verbose; then
+                echo "Failed to delete resource: $resource"
               fi
             done
           }
@@ -67,18 +56,7 @@ jobs:
           remaining_resources=$(az resource list --resource-group Abhijitchaudhari7898 --query "[].id" -o tsv)
           for resource in $remaining_resources; do
             echo "Deleting remaining resource: $resource"
-            retries=3
-            while [ $retries -gt 0 ]; do
-              if az resource delete --ids $resource --verbose; then
-                echo "Successfully deleted remaining resource: $resource"
-                break
-              else
-                echo "Failed to delete remaining resource: $resource. Retrying..."
-                retries=$((retries - 1))
-                sleep 5
-              fi
-            done
-            if [ $retries -eq 0 ]; then
-              echo "Failed to delete remaining resource: $resource after multiple attempts"
+            if ! az resource delete --ids $resource --verbose; then
+              echo "Failed to delete remaining resource: $resource"
             fi
           done
