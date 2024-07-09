@@ -81,8 +81,8 @@ jobs:
 
       - name: Validate Bicep Script using What-If
         working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment group what-if --resource-group pocrg001 --template-file ./main.bicep --parameters @mainA.parameters.json --parameters adminUsername=${{ secrets.ADMINPASSWORD }} --parameters adminPassword=${{ secrets. }}
+        run: az deployment group what-if --resource-group pocrg001 --template-file ./main.bicep --parameters @mainA.parameters.json --parameters adminUsername=${{ secrets.ADMINPASSWORD }} --parameters adminPassword=${{ secrets.ADMINUSERNAME }}
 
       - name: Deploy Resources
         working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment group create --resource-group pocrg001 --template-file ./main.bicep --parameters @mainA.parameters.json --parameters adminUsername=${{ secrets.ADMINPASSWORD }} --parameters adminPassword=${{ secrets. }}
+        run: az deployment group create --resource-group pocrg001 --template-file ./main.bicep --parameters @mainA.parameters.json --parameters adminUsername=${{ secrets.ADMINPASSWORD }} --parameters adminPassword=${{ secrets.ADMINUSERNAME }}
