@@ -9,6 +9,7 @@ param tags object ={
 }
 
 @description('Username for the Virtual Machine.')
+@secure()
 param adminUsername string 
 
 @description('Password for the Virtual Machine.')

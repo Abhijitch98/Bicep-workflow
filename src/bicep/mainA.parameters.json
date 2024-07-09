@@ -12,12 +12,6 @@
           "BusinessImpact": "Low"
         }
       },
-      "adminUsername": {
-        "value": "abhijitchaudhari"
-      },
-      "adminPassword": {
-        "value": "abhijitchaudhari@98"
-      },
       "publicIpName": {
         "value": "myPublicIP"
       },
