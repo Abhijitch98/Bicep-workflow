@@ -18,21 +18,21 @@ param adminUsername string
 param adminPassword string 
 
 // Generate a unique suffix based on the resource group name and VM name
-param publicIpName string = 'myPublicIP'
+param publicIpName string
 
 @description('Allocation method for the Public IP used to access the Virtual Machine.')
 @allowed([
   'Dynamic'
   'Static'
 ])
-param publicIPAllocationMethod string = 'Dynamic'
+param publicIPAllocationMethod string 
 
 @description('SKU for the Public IP used to access the Virtual Machine.')
 @allowed([
   'Basic'
   'Standard'
 ])
-param publicIpSku string = 'Basic'
+param publicIpSku string 
 
 @description('The Windows version for the VM. This will pick a fully patched image of this given Windows version.')
 @allowed([
@@ -60,40 +60,40 @@ param publicIpSku string = 'Basic'
   '2022-datacenter-g2'
   '2022-datacenter-smalldisk-g2'
 ])
-param OSVersion string = '2016-datacenter-smalldisk-g2'
+param OSVersion string 
 
 @description('Size of the virtual machine.')
-param vmSize string = 'Standard_B1ms'
+param vmSize string 
 
 @description('Location for all resources.')
 param location string 
 
 @description('Name of the virtual machine.')
-param vmName string = 'testpocvm0'
+param vmName string
 
 @description('Name of the virtual network associated with the virtual machine.')
-param virtualNetworkName string = 'MyVNET'
+param virtualNetworkName string 
 
 @description('Name of the subnet within the virtual network where the virtual machine is deployed.')
-param  subnetNames array = ['Subnet']
+param  subnetNames array 
 
 @description('Address space for the virtual network.')
-param address_space array = ['10.0.0.0/16']
+param address_space array 
 
 @description('Address prefix for the subnet within the virtual network.')
-param subnetPrefix array = ['10.0.0.0/24']
+param subnetPrefix array 
 
 @description('Type of storage account for the disk.')
-param storageAccountType string = 'StandardSSD_LRS'
+param storageAccountType string
 
 @description('Size of the disk in gigabytes.')
-param diskSizeGB int = 1023
+param diskSizeGB int 
 
 @description('Logical unit number (LUN) for the disk.')
-param lun int = 0
+param lun int 
 
 @description('Option for creating the disk.')
-param createOption string = 'Empty'
+param createOption string 
 
 module VMAzure 'VMAzure.bicep'={
   name:'pocvm'
