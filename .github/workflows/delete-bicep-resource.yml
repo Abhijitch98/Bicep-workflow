@@ -21,7 +21,7 @@ jobs:
 
       - name: Validate Bicep Script using What-If
         working-directory: ${{github.workspace}}/src/bicep
-        run: az deployment group what-if --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameters @mainA.parameters.json
+        run: az deployment group what-if --resource-group Abhijitchaudhari7898 --template-file ./main.bicep --parameters @mainA.parameters.json --parameters adminUsername=${{ secrets.ADMINUSERNAME }} --parameters adminPassword=${{ secrets.ADMINPASSWORD }}
 
       - name: List and Delete All Resources in Resource Group
         run: |
@@ -63,4 +63,3 @@ jobs:
 
 
 
-          
