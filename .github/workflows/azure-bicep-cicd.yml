@@ -19,10 +19,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
       
-      - name: Build Resource Group
+      - name: Validate Resource Group Template
         working-directory: ${{ github.workspace }}/src/bicep
         run: |
-          az deployment sub create --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
+          az deployment sub what-if --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
 
   deploy-resource-group:
     name: Deploy Resource Group
@@ -36,10 +36,9 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
       
-      - name: Validate Resource Group Deployment
+      - name: Deploy Resource Group
         working-directory: ${{ github.workspace }}/src/bicep
-        run: |
-          az group show --name pocrg001
+        run: az deployment sub create --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
 
   build-resources:
     name: Build Resources
@@ -61,7 +60,7 @@ jobs:
 
       - name: Validate Bicep Script using What-If
         working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment sub create --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
+        run: az deployment group what-if --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
 
   deploy-resources:
     name: Deploy Resources
@@ -78,10 +77,6 @@ jobs:
           
       - name: Check if directory exists
         run: ls ${{ github.workspace }}/src/bicep
-
-      - name: Validate Bicep Script using What-If
-        working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment group what-if --resource-group pocrg001 --template-file ./main.bicep --parameters @mainA.parameters.json --parameters adminUsername=${{ secrets.ADMINUSERNAME }} --parameters adminPassword=${{ secrets.ADMINPASSWORD }}
 
       - name: Deploy Resources
         working-directory: ${{ github.workspace }}/src/bicep
