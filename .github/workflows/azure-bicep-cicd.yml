@@ -60,8 +60,7 @@ jobs:
 
       - name: Validate Bicep Script using What-If
         working-directory: ${{ github.workspace }}/src/bicep
-        run: |
-          az deployment sub what-if --location 'UK South' --template-file ./main.bicep --parameters @ResourcesGro.parameters.json
+        run: az deployment sub what-if --location 'UK South' --template-file ./main.bicep --parameters @mainA.parameters.json
 
   deploy-resources:
     name: Deploy Resources
