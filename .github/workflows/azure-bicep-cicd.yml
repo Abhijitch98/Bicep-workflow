@@ -38,7 +38,8 @@ jobs:
       
       - name: Deploy Resource Group
         working-directory: ${{ github.workspace }}/src/bicep
-        run: az deployment sub create --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
+        run: |
+          az deployment sub create --location 'UK South' --template-file ./resourcegroup.bicep --parameters @ResourcesGro.parameters.json
 
   build-resources:
     name: Build Resources
